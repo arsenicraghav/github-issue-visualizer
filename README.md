@@ -1,5 +1,10 @@
-Assuming node and npm are installed 
-------------------------------------
+
+
+For demo please visit : https://servian-github.herokuapp.com/
+
+
+Running locally [ Assuming node and npm are installed ]
+--------------------------------------------------------
 
 1] cd <project-folder>
 
@@ -8,5 +13,3 @@ Assuming node and npm are installed
 3] npm start
 
 4] http://localhost:3000
-
-5] For demo please visit : https://servian-github.herokuapp.com/
