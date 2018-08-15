@@ -30,6 +30,7 @@
                     $("#barChartContainer").show();
                 } else if (data && (data.hasOwnProperty('msg') && data.msg == "NotFound")) {
                     console.log('NotFound');
+                    $("#inputUrl").parent().addClass('error').append('<span class="error">Enter a valid github url</span>');
                     $("#pieChartContainer").hide();
                     $("#barChartContainer").hide();
                 } else {
@@ -128,7 +129,7 @@
         <ol>
             <li class="form-row">
                 <label>Github repo Url:</label>
-                <input id="input-email" type="text" class="text-input required email default" name="email" value=""
+                <input id="inputUrl" type="text" class="text-input required email default" name="email" value=""
                        title="Enter github repo url"/>
             </li>
             <li class="button-row text-right">
