@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function ($) {
+
+            var dataPoints = [];
+            var options = {
+                data: [{
+                    type: "column",
+                    startAngle: 45,
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabel: "{label} ({y})",
+                    yValueFormatString: "#,##0.#" % "",
+                    dataPoints: dataPoints
+                }]
+            };
+
+            function processData(data) {
+                if (data && (data.hasOwnProperty('closedIssues') || data.hasOwnProperty('openIssues'))) {
+                    $.each(data, function (key, value) {
+                        console.log(key, value);
+                        dataPoints.push({label: key, y: parseInt(value)});
+                    });
+                    $("#pieChartContainer").show();
+                    $("#barChartContainer").show();
+                } else if (data && (data.hasOwnProperty('msg') && data.msg == "NotFound")) {
+                    console.log('NotFound');
+                    $("#pieChartContainer").hide();
+                    $("#barChartContainer").hide();
+                } else {
+                    $("#pieChartContainer").hide();
+                    $("#barChartContainer").hide();
+                }
+                options.data[0].type = "pie";
+                $("#pieChartContainer").CanvasJSChart(options);
+                options.data[0].type = "column";
+                $("#barChartContainer").CanvasJSChart(options);
+
+            }
+
+            function getRepoData(repoUrl) {
+                dataPoints = [];
+                options.data[0].dataPoints = dataPoints;
+                $.ajax({
+                    url: "/issues/" + owner + "/" + repo + "", success: processData
+                });
+            }
+
+            var re1 = '(https)';	// Word 1
+            var re2 = '(:)';	// Any Single Character 1
+            var re3 = '(\\/)';	// Any Single Character 2
+            var re4 = '(\\/)';	// Any Single Character 3
+            var re5 = '((?:[a-z][a-z\\.\\d\\-]+)\\.(?:[a-z][a-z\\-]+))(?![\\w\\.])';	// Fully Qualified Domain Name 1
+            var re6 = '(\\/)';	// Any Single Character 4
+            var re7 = '((?:[a-z][a-z0-9_-]*))';	// Variable Name 1
+            var re8 = '(\\/)';	// Any Single Character 5
+            var re9 = '((?:[a-z][a-z0-9_-]*))';	// Variable Name 2
+
+            var isValidGitHubUrl = new RegExp(re1 + re2 + re3 + re4 + re5 + re6 + re7 + re8 + re9, ["i"]);
+
+            var owner = '';
+            var repo = '';
+
+            $(".default").each(function () {
+                var defaultVal = $(this).attr('title');
+                $(this).focus(function () {
+                    if ($(this).val() == defaultVal) {
+                        $(this).removeClass('active').val('');
+                    }
+                });
+                $(this).blur(function () {
+                    if ($(this).val() == '') {
+                        $(this).addClass('active').val(defaultVal);
+                    }
+                })
+                    .blur().addClass('active');
+            });
+            $('.btn-submit').click(function (e) {
+                var $formId = $(this).parents('form');
+                var formAction = $formId.attr('action');
+                defaulttextRemove();
+                $('li', $formId).removeClass('error');
+                $('span.error').remove();
+                $('.required', $formId).each(function () {
+                    var inputVal = $(this).val();
+                    var $parentTag = $(this).parent();
+                    if (inputVal == '') {
+                        $parentTag.addClass('error').append('<span class="error">Required field</span>');
+                    }
+                    else {
+                        var validUrl = isValidGitHubUrl.exec(inputVal);
+                        if (!validUrl) {
+                            $parentTag.addClass('error').append('<span class="error">Enter a valid github url</span>');
+                        } else {
+                            owner = validUrl[7];
+                            repo = validUrl[9];
+                        }
+                    }
+                });
+                if ($('span.error').length == "0") {
+                    console.log(owner);
+                    console.log(repo);
+                    getRepoData();
+                }
+                e.preventDefault();
+            });
+        });
+
+        function defaulttextRemove() {
+            $('.default').each(function () {
+                var defaultVal = $(this).attr('title');
+                if ($(this).val() == defaultVal) {
+                    $(this).val('');
+                }
+            });
+        }
+    </script>
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<body>
+<form id="form-contact" class="styled">
+    <fieldset>
+        <ol>
+            <li class="form-row">
+                <label>Github repo Url:</label>
+                <input id="input-email" type="text" class="text-input required email default" name="email" value=""
+                       title="Enter github repo url"/>
+            </li>
+            <li class="button-row text-right">
+                <input class="btn-submit" type="submit" value="submit" name="submit"/>
+            </li>
+        </ol>
+    </fieldset>
+</form>
+<div id="pieChartContainer" style="height: 300px; width: 50%;float:left"></div>
+<div id="barChartContainer" style="height: 300px; width: 50%;"></div>
+</body>
+</html>

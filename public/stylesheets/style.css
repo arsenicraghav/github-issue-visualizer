@@ -1,0 +1,116 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.styled {
+    font-family: Arial, sans-serif;
+}
+
+.styled fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.styled fieldset legend {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    text-transform: capitalize;
+    padding: 5px 10px;
+    background: #fff;
+    display: block;
+    margin-bottom: 0;
+    border: 1px solid #ccc;
+}
+
+.styled fieldset ol, .styled fieldset ol li {
+    list-style: none;
+}
+
+.styled fieldset li.form-row {
+    margin-bottom: 3px;
+    padding: 2px 0;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.styled label {
+    font-size: 12px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    width: 100px;
+    margin-left: 5px;
+    line-height: 24px;
+}
+
+.styled input.text-input, .styled .text-area {
+    background: #fefefe;
+    border-top: 1px solid #909090;
+    border-right: 1px solid #cecece;
+    border-bottom: 1px solid #e1e1e1;
+    border-left: 1px solid #bbb;
+    padding: 3px;
+    width: 220px;
+    font-size: 12px;
+}
+
+.styled input.text-input.default.active, .styled .text-area.default.active {
+    color: #666666;
+    font-style: italic;
+}
+
+.styled fieldset li.button-row {
+    margin-bottom: 0;
+    padding: 2px 5px;
+}
+
+form input.btn-submit {
+    padding: 3px 7px;
+    font-family: Arial, sans-serif;
+    color: #000;
+    font-weight: bold;
+    border: 1px solid #000;
+    background: #FFE220;
+    font-size: 12px;
+}
+
+
+.styled span.error {
+    font-size: 11px;
+    background: none;
+    display: block;
+    padding: 2px;
+    text-align: center;
+}
+
+.styled fieldset li.error {
+    color: #D8000C;
+    background: #fff0f0;
+    border: 1px solid #f9c7c7;
+    padding: 5px 0;
+}
+
+.styled fieldset li.error label {
+    text-align: left;
+}
+
+#form-contact {
+    width: 360px;
+    margin: 0 auto;
+}
+
+.success {
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    color: #4F8A10;
+    background-color: #ebf6d9;
+    border: 1px solid #DFF2BF;
+}
