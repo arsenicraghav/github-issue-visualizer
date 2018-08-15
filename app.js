@@ -38,5 +38,5 @@ app.use(function (req, res) {
     res.status(404).send('Resource not found');
 });
 
-app.listen(config.port);
+app.listen(process.env.PORT || config.port);
 
